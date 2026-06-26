@@ -1,0 +1,14 @@
+# Ignore user-specific/reference planning files
+project_plan.md
+SmartElevatorSystem/docs/Documentation.md
+
+# Ignore CMake build directories and outputs
+SmartElevatorSystem/build/
+build/
+
+# Ignore IDE configurations
+.vscode/
+.vs/
+*.user
+*.suo
+*.db
