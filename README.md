@@ -16,7 +16,7 @@ SmartElevatorSystem/
 └── setup.md              # Local setup guide
 ```
 
-## Features to Implement
+## Features Implemented
 
 - Multi-elevator, multi-floor support.
 - External floor buttons (Up/Down) & internal destination buttons.
