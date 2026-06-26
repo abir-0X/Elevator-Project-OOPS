@@ -58,5 +58,3 @@ OOPS-LLD-ELEVATOR/
 - External floor buttons (Up/Down) & internal destination buttons.
 - State-based elevator movement logic.
 - Optimized nearest-elevator dispatch scheduling.
-- Google Test automated test coverage.
-- Structured comments using the STAR method.
