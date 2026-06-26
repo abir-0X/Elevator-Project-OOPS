@@ -1,6 +1,7 @@
 # Ignore user-specific/reference planning files
 project_plan.md
 SmartElevatorSystem/docs/Documentation.md
+SmartElevatorSystem/docs/assets/
 SmartElevatorSystem/tests/
 
 
