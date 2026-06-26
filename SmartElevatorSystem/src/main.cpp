@@ -2,17 +2,18 @@
  * STAR Context for main.cpp
  *
  * SITUATION: 
- *   Verifying Chapter 2 Relationships. Need to ensure Building holds Floor/Elevator collections
- *   properly, Elevator encapsulates a Floor object, and Elevator serves a list of Requests.
+ *   Verifying Chapter 3 Elevator Movement. Need to verify that the elevator cabin can
+ *   move up/down, stop, and open/close its doors while correctly transitioning its internal states.
  * 
  * TASK: 
- *   Update main.cpp to populate and assign Requests to Elevators, verifying the HAS-A and serves relationships.
+ *   Update main.cpp to simulate elevator movement scenarios (move up, move down, open/close doors, stop)
+ *   and render states after each step.
  * 
  * ACTION: 
- *   Created elevator Requests, added them to the elevators inside the building, and displayed status.
+ *   Invoked moveUp(), moveDown(), openDoor(), stop() methods on elevators and displayed state.
  * 
  * RESULT: 
- *   Active request counts are displayed for each elevator, showing successful object interaction.
+ *   State transitions (Idle -> Moving -> Door Open -> Idle) and floor levels updated correctly in the console.
  */
 
 #include <bits/stdc++.h>
@@ -31,17 +32,38 @@ int32_t main() {
     // Create a building with 10 floors and 2 elevators
     Building building(10, 2);
 
-    // Verify Chapter 2 relationships by adding requests to elevators
     auto& mutableElevators = building.getMutableElevators();
-    if (mutableElevators.size() >= 2) {
-        // Elevator 0 gets an internal request to floor 5
-        mutableElevators[0].addRequest(Request(0, 5, 1, true));
-        // Elevator 1 gets an external request from floor 3 to floor 8 going UP
-        mutableElevators[1].addRequest(Request(3, 8, 1, false));
-    }
 
-    // Show status
+    // Verify initial status
+    cout << "--- Initial Status ---" << endl;
     Display::showStatus(building);
+
+    // Verify movement transitions
+    if (mutableElevators.size() >= 2) {
+        // Move elevator 0 UP two times
+        cout << "--- Elevator 0 moves UP ---" << endl;
+        mutableElevators[0].moveUp();
+        Display::showStatus(building);
+
+        cout << "--- Elevator 0 moves UP again ---" << endl;
+        mutableElevators[0].moveUp();
+        Display::showStatus(building);
+
+        // Open door on Elevator 0
+        cout << "--- Elevator 0 opens door ---" << endl;
+        mutableElevators[0].openDoor();
+        Display::showStatus(building);
+
+        // Move elevator 1 DOWN from startFloor (0) -> goes to -1
+        cout << "--- Elevator 1 moves DOWN ---" << endl;
+        mutableElevators[1].moveDown();
+        Display::showStatus(building);
+
+        // Stop Elevator 1
+        cout << "--- Elevator 1 stops ---" << endl;
+        mutableElevators[1].stop();
+        Display::showStatus(building);
+    }
 
     return 0;
 }

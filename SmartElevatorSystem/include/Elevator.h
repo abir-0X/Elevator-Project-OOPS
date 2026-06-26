@@ -23,11 +23,24 @@
 #include "Floor.h"
 #include "Request.h"
 
+enum class ElevatorState {
+    IDLE,
+    MOVING,
+    DOOR_OPEN
+};
+
+enum class Direction {
+    UP,
+    DOWN,
+    IDLE
+};
+
 class Elevator {
 private:
     int id;
     Floor currentFloor;
-    int direction; // -1 for DOWN, 0 for IDLE, 1 for UP
+    Direction direction;
+    ElevatorState state;
     bool isDoorOpen;
     std::vector<Request> requests;
 
@@ -38,18 +51,27 @@ public:
     int getId() const;
     int getCurrentFloor() const;
     const Floor& getCurrentFloorObject() const;
-    int getDirection() const;
+    Direction getDirection() const;
+    ElevatorState getState() const;
     bool getIsDoorOpen() const;
     const std::vector<Request>& getRequests() const;
 
     // Setters
     void setCurrentFloor(const Floor& floor);
-    void setDirection(int dir);
+    void setDirection(Direction dir);
     void setIsDoorOpen(bool open);
+    void setState(ElevatorState st);
 
     // Request operations
     void addRequest(const Request& req);
     void clearRequests();
+
+    // Movement operations
+    void moveUp();
+    void moveDown();
+    void stop();
+    void openDoor();
+    void closeDoor();
 };
 
 #endif // ELEVATOR_H
