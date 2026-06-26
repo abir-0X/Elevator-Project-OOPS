@@ -1,4 +1,4 @@
-# Smart Elevator System Simulator
+# Elevator System Simulator
 
 A console-based simulator of a multi-floor, multi-elevator system in C++17. Designed with Low-Level Design (LLD) practices, SOLID principles, and clean C++ architecture.
 
