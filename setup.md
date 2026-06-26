@@ -1,6 +1,23 @@
-# Local Setup Guide
+# Setup & Execution Guide
 
-Follow these steps to set up, and run the Smart Elevator System Simulator on your local machine.
+Application can be set up in any of two ways:
+---
+
+## 1. Quick Start (Easy): 
+If you want to run the simulator immediately without installing a compiler, CMake, or other build tools:
+
+1. Go to the [Releases](https://github.com/abir-0X/Elevator-Project-OOPS/releases) page.
+2. Download the ZIP file corresponding to your operating system:
+   - `elevator_sim-windows.zip` (for Windows)
+   - `elevator_sim-macos.zip` (for macOS)
+   - `elevator_sim-linux.zip` (for Linux)
+3. Extract the contents of the ZIP file.
+4. Run the executable:
+---
+
+## 2. Local Setup Guide (Build from Source)
+
+Follow these steps to set up and run the simulator from source on your local machine.
 
 ## Prerequisites
 
