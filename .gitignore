@@ -1,7 +1,9 @@
 # Ignore user-specific/reference planning files
 project_plan.md
 SmartElevatorSystem/docs/Documentation.md
-SmartElevatorSystem/docs/assets/
+SmartElevatorSystem/docs/assets/*
+!SmartElevatorSystem/docs/assets/basic_uml_class_diagram.png
+!SmartElevatorSystem/docs/assets/system_architecture_diagram.png
 SmartElevatorSystem/tests/
 
 
