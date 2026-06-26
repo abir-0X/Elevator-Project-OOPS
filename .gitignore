@@ -7,6 +7,8 @@ SmartElevatorSystem/tests/
 # Ignore CMake build directories and outputs
 SmartElevatorSystem/build/
 build/
+release/
+*.zip
 
 # Ignore IDE configurations
 .vscode/

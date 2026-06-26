@@ -1,0 +1,91 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            artifact_name: elevator_sim
+            asset_name: elevator_sim-linux
+          - os: macos-latest
+            artifact_name: elevator_sim
+            asset_name: elevator_sim-macos
+          - os: windows-latest
+            artifact_name: elevator_sim.exe
+            asset_name: elevator_sim-windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -S SmartElevatorSystem -B SmartElevatorSystem/build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
+
+      - name: Build project
+        run: cmake --build SmartElevatorSystem/build --config Release
+
+      - name: Prepare Release Directory
+        shell: bash
+        run: |
+          mkdir -p release_bin
+          
+          # Copy binary based on platform
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            if [ -f "SmartElevatorSystem/build/Release/elevator_sim.exe" ]; then
+              cp "SmartElevatorSystem/build/Release/elevator_sim.exe" release_bin/
+            elif [ -f "SmartElevatorSystem/build/elevator_sim.exe" ]; then
+              cp "SmartElevatorSystem/build/elevator_sim.exe" release_bin/
+            fi
+          else
+            cp "SmartElevatorSystem/build/elevator_sim" release_bin/
+          fi
+          
+          # Create customized README.txt
+          cat << 'EOF' > release_bin/README.txt
+          Smart Elevator System Simulator
+          ===============================
+          
+          How to Run:
+          -----------
+          For Windows:
+            1. Double click elevator_sim.exe
+               OR
+            2. Open terminal and run:
+               elevator_sim.exe
+            
+          For macOS / Linux:
+            1. Open terminal
+            2. Make the file executable:
+               chmod +x elevator_sim
+            3. Run:
+               ./elevator_sim
+          EOF
+
+      - name: Create Zip Archive
+        shell: bash
+        run: |
+          cd release_bin
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            7z a ../${{ matrix.asset_name }}.zip *
+          else
+            zip -r ../${{ matrix.asset_name }}.zip *
+          fi
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.asset_name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
