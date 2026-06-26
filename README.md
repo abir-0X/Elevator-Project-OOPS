@@ -19,9 +19,12 @@ A console-based simulator of a multi-floor, multi-elevator system in C++17. Desi
 
 ### Nearest-Elevator SCAN Cost Routing Strategy
 The scheduling strategy evaluates floor calls using a proximity cost algorithm with directional alignment rewards:
-- **Idle Elevator**: Cost is simply the absolute distance: $\text{cost} = | \text{current\_floor} - \text{source\_floor} |$.
-- **Moving Elevator (Aligned)**: If the elevator is moving UP and the floor request is above it in the UP direction, cost is just the distance. Similarly for DOWN direction.
-- **Moving Elevator (Misaligned)**: If the request is in the opposite direction or behind the current position, a standard misalignment penalty ($+100$) is added to prevent sudden direction shifts, maintaining the SCAN movement pattern.
+- **Idle Elevator**: Cost is simply the absolute distance:
+  $$\text{cost} = |\text{current floor} - \text{source floor}|$$
+- **Moving Elevator (Aligned)**: If the elevator is moving UP and the floor request is above it in the UP direction (or moving DOWN and the request is below it), the cost is just the distance:
+  $$\text{cost} = |\text{current floor} - \text{source floor}|$$
+- **Moving Elevator (Misaligned)**: If the request is in the opposite direction or behind the current position, a standard misalignment penalty ($+100$) is added to prevent sudden direction shifts, maintaining the SCAN movement pattern:
+  $$\text{cost} = |\text{current floor} - \text{source floor}| + 100$$
 
 ---
 
