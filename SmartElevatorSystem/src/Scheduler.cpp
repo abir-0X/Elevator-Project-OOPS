@@ -24,7 +24,7 @@ Scheduler::Scheduler()
     : algorithm(make_unique<NearestScanScheduler>()) {}
 
 Scheduler::Scheduler(unique_ptr<ISchedulingAlgorithm> algo) 
-    : algorithm(move(algo)) {}
+    : algorithm(std::move(algo)) {}
 
 void Scheduler::assignElevator(const Request& req, Building& building) {
     int idx = algorithm->findNearest(req, building);

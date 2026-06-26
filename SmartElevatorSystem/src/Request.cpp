@@ -16,8 +16,6 @@
 
 #include "Request.h"
 
-using namespace std;
-
 Request::Request(int src, int dest, int dir, bool internal)
     : sourceFloor(src), destinationFloor(dest), direction(dir), isInternal(internal) {}
 

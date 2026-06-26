@@ -14,7 +14,10 @@
  *   The entire Smart Elevator system works together interactively in a complete, playable simulation.
  */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <limits>
+#include <exception>
+#include <cstdint>
 #include "Building.h"
 #include "Display.h"
 #include "Scheduler.h"

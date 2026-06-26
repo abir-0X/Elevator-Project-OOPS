@@ -16,8 +16,6 @@
 
 #include "Floor.h"
 
-using namespace std;
-
 Floor::Floor() : floorNumber(0) {}
 
 Floor::Floor(int floorNum) : floorNumber(floorNum) {}
