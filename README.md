@@ -28,6 +28,16 @@ The scheduling strategy evaluates floor calls using a proximity cost algorithm w
 
 ---
 
+## System Design & Architecture
+
+### Basic UML Class Diagram
+![Basic UML Class Diagram](SmartElevatorSystem/docs/assets/basic_uml_class_diagram.png)
+
+### System Architecture Diagram
+![System Architecture Diagram](SmartElevatorSystem/docs/assets/system_architecture_diagram.png)
+
+---
+
 ## Folder Structure
 
 ```text
