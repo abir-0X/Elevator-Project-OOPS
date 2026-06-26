@@ -22,6 +22,7 @@ private:
     int floorNumber;
 
 public:
+    Floor();
     Floor(int floorNum);
     int getFloorNumber() const;
 };

@@ -30,7 +30,8 @@ void Display::showStatus(const Building& building) {
         std::cout << "Elevator #" << elevator.getId() 
                   << " | Current Floor: " << elevator.getCurrentFloor()
                   << " | Direction: " << dirStr
-                  << " | Door: " << doorStr << "\n";
+                  << " | Door: " << doorStr
+                  << " | Active Requests: " << elevator.getRequests().size() << "\n";
     }
     std::cout << "==========================================================\n\n";
 }

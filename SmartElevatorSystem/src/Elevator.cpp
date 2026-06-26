@@ -17,13 +17,17 @@
 #include "Elevator.h"
 
 Elevator::Elevator(int id, int startFloor) 
-    : id(id), currentFloor(startFloor), direction(0), isDoorOpen(false) {}
+    : id(id), currentFloor(Floor(startFloor)), direction(0), isDoorOpen(false) {}
 
 int Elevator::getId() const {
     return id;
 }
 
 int Elevator::getCurrentFloor() const {
+    return currentFloor.getFloorNumber();
+}
+
+const Floor& Elevator::getCurrentFloorObject() const {
     return currentFloor;
 }
 
@@ -35,7 +39,11 @@ bool Elevator::getIsDoorOpen() const {
     return isDoorOpen;
 }
 
-void Elevator::setCurrentFloor(int floor) {
+const std::vector<Request>& Elevator::getRequests() const {
+    return requests;
+}
+
+void Elevator::setCurrentFloor(const Floor& floor) {
     currentFloor = floor;
 }
 
@@ -45,4 +53,12 @@ void Elevator::setDirection(int dir) {
 
 void Elevator::setIsDoorOpen(bool open) {
     isDoorOpen = open;
+}
+
+void Elevator::addRequest(const Request& req) {
+    requests.push_back(req);
+}
+
+void Elevator::clearRequests() {
+    requests.clear();
 }

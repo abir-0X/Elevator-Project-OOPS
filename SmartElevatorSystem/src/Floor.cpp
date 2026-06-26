@@ -16,6 +16,8 @@
 
 #include "Floor.h"
 
+Floor::Floor() : floorNumber(0) {}
+
 Floor::Floor(int floorNum) : floorNumber(floorNum) {}
 
 int Floor::getFloorNumber() const {

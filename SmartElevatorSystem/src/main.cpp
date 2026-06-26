@@ -2,19 +2,17 @@
  * STAR Context for main.cpp
  *
  * SITUATION: 
- *   Verifying Chapter 1 OOP structures. Need an execution flow that instantiates
- *   a Building containing Floors and Elevators, then displays their initial status.
+ *   Verifying Chapter 2 Relationships. Need to ensure Building holds Floor/Elevator collections
+ *   properly, Elevator encapsulates a Floor object, and Elevator serves a list of Requests.
  * 
  * TASK: 
- *   Update main.cpp to instantiate a Building and utilize the Display class to output
- *   initial elevator status, keeping the local coding style.
+ *   Update main.cpp to populate and assign Requests to Elevators, verifying the HAS-A and serves relationships.
  * 
  * ACTION: 
- *   Created a Building instance with 10 floors and 2 elevators, then invoked
- *   Display::showStatus.
+ *   Created elevator Requests, added them to the elevators inside the building, and displayed status.
  * 
  * RESULT: 
- *   Successfully printed initial elevator status, verifying Chapter 1 classes compile and work.
+ *   Active request counts are displayed for each elevator, showing successful object interaction.
  */
 
 #include <bits/stdc++.h>
@@ -33,7 +31,16 @@ int32_t main() {
     // Create a building with 10 floors and 2 elevators
     Building building(10, 2);
 
-    // Show initial status
+    // Verify Chapter 2 relationships by adding requests to elevators
+    auto& mutableElevators = building.getMutableElevators();
+    if (mutableElevators.size() >= 2) {
+        // Elevator 0 gets an internal request to floor 5
+        mutableElevators[0].addRequest(Request(0, 5, 1, true));
+        // Elevator 1 gets an external request from floor 3 to floor 8 going UP
+        mutableElevators[1].addRequest(Request(3, 8, 1, false));
+    }
+
+    // Show status
     Display::showStatus(building);
 
     return 0;
