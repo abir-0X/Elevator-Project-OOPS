@@ -2,18 +2,19 @@
  * STAR Context for main.cpp
  *
  * SITUATION: 
- *   Verifying Chapter 3 Elevator Movement. Need to verify that the elevator cabin can
- *   move up/down, stop, and open/close its doors while correctly transitioning its internal states.
+ *   Verifying Chapter 4 Request Handling. Need to ensure that when multiple requests 
+ *   are queued, they are correctly sorted using the SCAN algorithm, and the elevator
+ *   processes them floor-by-floor.
  * 
  * TASK: 
- *   Update main.cpp to simulate elevator movement scenarios (move up, move down, open/close doors, stop)
- *   and render states after each step.
+ *   Update main.cpp to queue multiple requests (e.g. floors 3, 8, 1) and run steps
+ *   to verify they are serviced in sorted order (1, then 3, then 8).
  * 
  * ACTION: 
- *   Invoked moveUp(), moveDown(), openDoor(), stop() methods on elevators and displayed state.
+ *   Added requests to Elevator 0, then ran step() inside a loop until requests were cleared.
  * 
  * RESULT: 
- *   State transitions (Idle -> Moving -> Door Open -> Idle) and floor levels updated correctly in the console.
+ *   Elevator services floor 1, then 3, then 8, opening/closing doors correctly without thrashing.
  */
 
 #include <bits/stdc++.h>
@@ -34,35 +35,26 @@ int32_t main() {
 
     auto& mutableElevators = building.getMutableElevators();
 
-    // Verify initial status
-    cout << "--- Initial Status ---" << endl;
-    Display::showStatus(building);
+    if (!mutableElevators.empty()) {
+        Elevator& elevator = mutableElevators[0];
 
-    // Verify movement transitions
-    if (mutableElevators.size() >= 2) {
-        // Move elevator 0 UP two times
-        cout << "--- Elevator 0 moves UP ---" << endl;
-        mutableElevators[0].moveUp();
+        // Add out-of-order requests: floor 3, then 8, then 1
+        cout << "--- Queueing requests for floors: 3, 8, 1 ---" << endl;
+        elevator.addRequest(Request(0, 3, 1, true));
+        elevator.addRequest(Request(0, 8, 1, true));
+        elevator.addRequest(Request(0, 1, 1, true));
+
+        // Display status to verify they are sorted
         Display::showStatus(building);
 
-        cout << "--- Elevator 0 moves UP again ---" << endl;
-        mutableElevators[0].moveUp();
-        Display::showStatus(building);
-
-        // Open door on Elevator 0
-        cout << "--- Elevator 0 opens door ---" << endl;
-        mutableElevators[0].openDoor();
-        Display::showStatus(building);
-
-        // Move elevator 1 DOWN from startFloor (0) -> goes to -1
-        cout << "--- Elevator 1 moves DOWN ---" << endl;
-        mutableElevators[1].moveDown();
-        Display::showStatus(building);
-
-        // Stop Elevator 1
-        cout << "--- Elevator 1 stops ---" << endl;
-        mutableElevators[1].stop();
-        Display::showStatus(building);
+        // Run steps until all requests are completed
+        int steps = 0;
+        while (elevator.hasRequests() && steps < 15) {
+            steps++;
+            cout << "--- Step " << steps << " ---" << endl;
+            elevator.step();
+            Display::showStatus(building);
+        }
     }
 
     return 0;

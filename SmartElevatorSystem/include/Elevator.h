@@ -65,6 +65,9 @@ public:
     // Request operations
     void addRequest(const Request& req);
     void clearRequests();
+    bool hasRequests() const;
+    void sortRequests();
+    void step();
 
     // Movement operations
     void moveUp();
