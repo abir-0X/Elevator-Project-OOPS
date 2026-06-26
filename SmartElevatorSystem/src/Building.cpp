@@ -15,6 +15,7 @@
  */
 
 #include "Building.h"
+using namespace std;
 
 Building::Building(int numFloors, int numElevators) {
     // Populate floors 0 to numFloors-1
@@ -27,14 +28,14 @@ Building::Building(int numFloors, int numElevators) {
     }
 }
 
-const std::vector<Floor>& Building::getFloors() const {
+const vector<Floor>& Building::getFloors() const {
     return floors;
 }
 
-const std::vector<Elevator>& Building::getElevators() const {
+const vector<Elevator>& Building::getElevators() const {
     return elevators;
 }
 
-std::vector<Elevator>& Building::getMutableElevators() {
+vector<Elevator>& Building::getMutableElevators() {
     return elevators;
 }

@@ -14,6 +14,7 @@ set(LIB_SOURCES
     src/Request.cpp
     src/Building.cpp
     src/Display.cpp
+    src/Scheduler.cpp
 )
 
 # If no sources exist yet for library, compile only executable

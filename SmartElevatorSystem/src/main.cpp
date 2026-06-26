@@ -2,24 +2,27 @@
  * STAR Context for main.cpp
  *
  * SITUATION: 
- *   Verifying Chapter 4 Request Handling. Need to ensure that when multiple requests 
- *   are queued, they are correctly sorted using the SCAN algorithm, and the elevator
- *   processes them floor-by-floor.
+ *   Verifying Chapter 5 Scheduler. Need to verify that the Scheduler correctly calculates
+ *   assignment costs for elevators and dispatches requests to the most optimal elevator
+ *   based on proximity and movement direction.
  * 
  * TASK: 
- *   Update main.cpp to queue multiple requests (e.g. floors 3, 8, 1) and run steps
- *   to verify they are serviced in sorted order (1, then 3, then 8).
+ *   Update main.cpp to instantiate building with 2 elevators in specific states and submit
+ *   external requests, checking if the Scheduler routes them to the correct elevator.
  * 
  * ACTION: 
- *   Added requests to Elevator 0, then ran step() inside a loop until requests were cleared.
+ *   Configured Elevator 0 at floor 2 (UP) and Elevator 1 at floor 6 (DOWN), then submitted
+ *   UP request at floor 3 and DOWN request at floor 5 using Scheduler::assignElevator.
  * 
  * RESULT: 
- *   Elevator services floor 1, then 3, then 8, opening/closing doors correctly without thrashing.
+ *   Scheduler correctly routes the floor 3 UP request to Elevator 0, and the floor 5 DOWN
+ *   request to Elevator 1, verifying the nearest-elevator algorithm.
  */
 
 #include <bits/stdc++.h>
 #include "Building.h"
 #include "Display.h"
+#include "Scheduler.h"
 
 using namespace std;
 
@@ -35,26 +38,37 @@ int32_t main() {
 
     auto& mutableElevators = building.getMutableElevators();
 
-    if (!mutableElevators.empty()) {
-        Elevator& elevator = mutableElevators[0];
+    if (mutableElevators.size() >= 2) {
+        // Pre-configure Elevator 0: at floor 2, moving UP
+        mutableElevators[0].setCurrentFloor(Floor(2));
+        mutableElevators[0].setDirection(Direction::UP);
+        mutableElevators[0].setState(ElevatorState::MOVING);
 
-        // Add out-of-order requests: floor 3, then 8, then 1
-        cout << "--- Queueing requests for floors: 3, 8, 1 ---" << endl;
-        elevator.addRequest(Request(0, 3, 1, true));
-        elevator.addRequest(Request(0, 8, 1, true));
-        elevator.addRequest(Request(0, 1, 1, true));
+        // Pre-configure Elevator 1: at floor 6, moving DOWN
+        mutableElevators[1].setCurrentFloor(Floor(6));
+        mutableElevators[1].setDirection(Direction::DOWN);
+        mutableElevators[1].setState(ElevatorState::MOVING);
 
-        // Display status to verify they are sorted
+        cout << "--- Initial Custom States ---" << endl;
         Display::showStatus(building);
 
-        // Run steps until all requests are completed
-        int steps = 0;
-        while (elevator.hasRequests() && steps < 15) {
-            steps++;
-            cout << "--- Step " << steps << " ---" << endl;
-            elevator.step();
-            Display::showStatus(building);
-        }
+        Scheduler scheduler;
+
+        // 1. Submit Request: UP from floor 3 (destination floor 7)
+        // Should go to Elevator 0 (at floor 2, UP) instead of Elevator 1 (at floor 6, DOWN)
+        cout << "--- Submitting UP call from Floor 3 ---" << endl;
+        Request req1(3, 7, 1, false);
+        scheduler.assignElevator(req1, building);
+
+        // 2. Submit Request: DOWN from floor 5 (destination floor 1)
+        // Should go to Elevator 1 (at floor 6, DOWN) instead of Elevator 0 (at floor 2, UP)
+        cout << "--- Submitting DOWN call from Floor 5 ---" << endl;
+        Request req2(5, 1, -1, false);
+        scheduler.assignElevator(req2, building);
+
+        // Display updated status
+        cout << "--- Final Status ---" << endl;
+        Display::showStatus(building);
     }
 
     return 0;
