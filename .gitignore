@@ -1,6 +1,8 @@
 # Ignore user-specific/reference planning files
 project_plan.md
 SmartElevatorSystem/docs/Documentation.md
+SmartElevatorSystem/tests/
+
 
 # Ignore CMake build directories and outputs
 SmartElevatorSystem/build/

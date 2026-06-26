@@ -1,6 +1,6 @@
 # Local Setup Guide
 
-Follow these steps to set up, build, and run the Smart Elevator System Simulator on your local machine.
+Follow these steps to set up, and run the Smart Elevator System Simulator on your local machine.
 
 ## Prerequisites
 
@@ -36,19 +36,11 @@ Ensure you have the following installed on your system:
 
 5. **Run the Simulation**
    Execute the compiled binary:
-   - **Windows (CMD/PowerShell)**:
+   - **Windows (MinGW/GCC)**:
      ```powershell
-     .\build\Debug\elevator_sim.exe
+     .\build\elevator_sim.exe
      ```
    - **macOS/Linux**:
      ```bash
      ./build/elevator_sim
      ```
-
-## Running Tests
-
-Once testing is integrated (using Google Test):
-```bash
-cd build
-ctest --output-on-failure
-```

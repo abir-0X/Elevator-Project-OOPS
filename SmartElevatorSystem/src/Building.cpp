@@ -1,23 +1,32 @@
 /*
- * STAR Context for Building.cpp
+ * Context for Building.cpp
  *
- * SITUATION: 
- *   Implement the Building container methods.
+ * REQUIREMENT: 
+ *   Implement the Building class representing a building containing multiple floors and elevators.
  * 
- * TASK: 
- *   Write the constructor to initialize collections of Floor and Elevator objects based on counts.
+ * DESIGN: 
+ *   Keep collections of Floor and Elevator objects (composition) and expose getters and validation logic on instantiation.
  * 
- * ACTION: 
- *   Created vectors and populated them in a loop with appropriate floor levels and elevator IDs.
+ * IMPLEMENTED: 
+ *   Wrote constructor with defensive checks (numFloors > 0, numElevators > 0) and standard collection accessors.
  * 
  * RESULT: 
- *   The simulated building configuration is instantiated with all structural floors and elevator cabs.
+ *   The Building configuration is safely initialized and can be queried.
  */
 
 #include "Building.h"
+#include "Exceptions.h"
+
 using namespace std;
 
 Building::Building(int numFloors, int numElevators) {
+    if (numFloors <= 0) {
+        throw InvalidFloorException("Building must have at least 1 floor.");
+    }
+    if (numElevators <= 0) {
+        throw InvalidElevatorException("Building must have at least 1 elevator.");
+    }
+
     // Populate floors 0 to numFloors-1
     for (int i = 0; i < numFloors; ++i) {
         floors.push_back(Floor(i));
@@ -39,3 +48,4 @@ const vector<Elevator>& Building::getElevators() const {
 vector<Elevator>& Building::getMutableElevators() {
     return elevators;
 }
+

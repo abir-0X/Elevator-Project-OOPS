@@ -1,18 +1,19 @@
 /*
- * STAR Context for Request.h
+ * Context for Request.h
  *
- * SITUATION: 
+ * REQUIREMENT: 
  *   Users create requests to summon or steer elevators. We need a class to model this input request.
  * 
- * TASK: 
+ * DESIGN: 
  *   Define a Request class encapsulating source floor, destination floor, direction, and call origin.
  * 
- * ACTION: 
+ * IMPLEMENTED: 
  *   Declared member variables for source, destination, direction, and internal/external flags.
  * 
  * RESULT: 
  *   Requests are standardized into objects that can be queued and sorted.
  */
+
 
 #ifndef REQUEST_H
 #define REQUEST_H

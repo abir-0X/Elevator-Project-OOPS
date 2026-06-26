@@ -1,18 +1,19 @@
 /*
- * STAR Context for Building.h
+ * Context for Building.h
  *
- * SITUATION: 
+ * REQUIREMENT: 
  *   A Building houses both the floors and the elevator cabins in the simulation.
  * 
- * TASK: 
+ * DESIGN: 
  *   Define a Building class that coordinates elevators and floors, offering access interfaces.
  * 
- * ACTION: 
+ * IMPLEMENTED: 
  *   Declared std::vector containers of Floor and Elevator objects with constructors.
  * 
  * RESULT: 
  *   Building class provides a single system container to holds all other entity collections.
  */
+
 
 #ifndef BUILDING_H
 #define BUILDING_H

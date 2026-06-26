@@ -1,20 +1,22 @@
 /*
- * STAR Context for Floor.cpp
+ * Context for Floor.cpp
  *
- * SITUATION: 
- *   Implement the behavior of Floor objects.
+ * REQUIREMENT: 
+ *   Implement the Floor class representing building levels.
  * 
- * TASK: 
- *   Define initialization and access functions for a floor.
+ * DESIGN: 
+ *   Define initialization and access functions for a floor level.
  * 
- * ACTION: 
- *   Wrote constructor setting the floor level and accessor returning it.
+ * IMPLEMENTED: 
+ *   Wrote default and parameterized constructors setting the floor level, and accessor.
  * 
  * RESULT: 
  *   Floor levels can be set and queried.
  */
 
 #include "Floor.h"
+
+using namespace std;
 
 Floor::Floor() : floorNumber(0) {}
 

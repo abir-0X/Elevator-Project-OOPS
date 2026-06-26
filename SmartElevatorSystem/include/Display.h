@@ -1,18 +1,19 @@
 /*
- * STAR Context for Display.h
+ * Context for Display.h
  *
- * SITUATION: 
+ * REQUIREMENT: 
  *   We need to display the current state of elevators and floors in a structured format in the console.
  * 
- * TASK: 
+ * DESIGN: 
  *   Define a Display class containing methods to print elevator status and building floor views.
  * 
- * ACTION: 
+ * IMPLEMENTED: 
  *   Declared static helper methods that accept Building reference to render status outputs.
  * 
  * RESULT: 
  *   A dedicated presentation interface is available, separating UI display from logic.
  */
+
 
 #ifndef DISPLAY_H
 #define DISPLAY_H

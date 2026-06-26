@@ -1,15 +1,14 @@
 /*
- * STAR Context for Elevator.h
+ * Context for Elevator.h
  *
- * SITUATION: 
+ * REQUIREMENT: 
  *   Need a structured data type to represent an elevator cabin in the simulation.
  * 
- * TASK: 
- *   Define an encapsulated Elevator class holding basic state variables (ID, current floor,
- *   direction, door status) with constructors and clean accessors.
+ * DESIGN: 
+ *   Define an encapsulated Elevator class holding basic state variables (ID, current floor, direction, door status) with constructors and clean accessors.
  * 
- * ACTION: 
- *   Declared standard private member variables and public inline/basic getters/setters.
+ * IMPLEMENTED: 
+ *   Declared standard private member variables and public getters/setters/movement methods.
  * 
  * RESULT: 
  *   The Elevator interface is established, enabling aggregation under Building and movement control.
@@ -20,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 #include "Floor.h"
 #include "Request.h"
 
@@ -55,6 +55,7 @@ public:
     ElevatorState getState() const;
     bool getIsDoorOpen() const;
     const std::vector<Request>& getRequests() const;
+    std::optional<int> getNextDestination() const;
 
     // Setters
     void setCurrentFloor(const Floor& floor);

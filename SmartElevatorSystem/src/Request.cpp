@@ -1,13 +1,13 @@
 /*
- * STAR Context for Request.cpp
+ * Context for Request.cpp
  *
- * SITUATION: 
- *   Implement the getters and constructor of the Request class.
+ * REQUIREMENT: 
+ *   Implement the constructors and getters of the Request class to capture user input.
  * 
- * TASK: 
- *   Create initialization logic to capture user elevator calls correctly.
+ * DESIGN: 
+ *   Encapsulate source floor, destination floor, direction, and origin type (internal/external).
  * 
- * ACTION: 
+ * IMPLEMENTED: 
  *   Wrote parameter constructor and standard accessors.
  * 
  * RESULT: 
@@ -15,6 +15,8 @@
  */
 
 #include "Request.h"
+
+using namespace std;
 
 Request::Request(int src, int dest, int dir, bool internal)
     : sourceFloor(src), destinationFloor(dest), direction(dir), isInternal(internal) {}

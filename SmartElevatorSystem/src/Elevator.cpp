@@ -1,22 +1,25 @@
 /*
- * STAR Context for Elevator.cpp
+ * Context for Elevator.cpp
  *
- * SITUATION: 
- *   Implement the behaviors and constructors defined in Elevator.h.
+ * REQUIREMENT: 
+ *   Implement initialization, state transitions, movement, and request queuing logic for a single elevator cabin.
  * 
- * TASK: 
- *   Implement initialization logic and basic state transitions for a single elevator cabin.
+ * DESIGN: 
+ *   Define methods for moving up/down, opening/closing doors, checking active requests, and sorting requests using the SCAN algorithm.
  * 
- * ACTION: 
- *   Written simple constructors and setter/getter functions matching standard C++ LLD practices.
+ * IMPLEMENTED: 
+ *   Wrote constructor, enums integration, moveUp, moveDown, stop, openDoor, closeDoor, sortRequests, and step methods.
  * 
  * RESULT: 
- *   Elevator instances can now be dynamically initialized and manipulated by building and movement managers.
+ *   Elevator objects process requests, transition states (Idle -> Moving -> Door Open -> Idle) and update positions properly.
  */
 
 #include "Elevator.h"
 #include <algorithm>
 #include <cmath>
+#include <iostream>
+
+using namespace std;
 
 Elevator::Elevator(int id, int startFloor) 
     : id(id), currentFloor(Floor(startFloor)), direction(Direction::IDLE), state(ElevatorState::IDLE), isDoorOpen(false) {}
@@ -45,8 +48,15 @@ bool Elevator::getIsDoorOpen() const {
     return isDoorOpen;
 }
 
-const std::vector<Request>& Elevator::getRequests() const {
+const vector<Request>& Elevator::getRequests() const {
     return requests;
+}
+
+optional<int> Elevator::getNextDestination() const {
+    if (requests.empty()) {
+        return nullopt;
+    }
+    return requests.front().getDestinationFloor();
 }
 
 void Elevator::setCurrentFloor(const Floor& floor) {
@@ -66,6 +76,12 @@ void Elevator::setState(ElevatorState st) {
 }
 
 void Elevator::addRequest(const Request& req) {
+    for (const auto& r : requests) {
+        if (r.getDestinationFloor() == req.getDestinationFloor() && r.getDirection() == req.getDirection()) {
+            cout << "[Warning] Duplicate request for floor " << req.getDestinationFloor() << " ignored.\n";
+            return;
+        }
+    }
     requests.push_back(req);
     sortRequests();
 }
@@ -121,13 +137,13 @@ void Elevator::sortRequests() {
     int curr = currentFloor.getFloorNumber();
     Direction dir = direction;
 
-    std::sort(requests.begin(), requests.end(), [curr, dir](const Request& a, const Request& b) {
+    sort(requests.begin(), requests.end(), [curr, dir](const Request& a, const Request& b) {
         int destA = a.getDestinationFloor();
         int destB = b.getDestinationFloor();
 
         // If IDLE, sort by proximity
         if (dir == Direction::IDLE) {
-            return std::abs(destA - curr) < std::abs(destB - curr);
+            return abs(destA - curr) < abs(destB - curr);
         }
 
         // If UP
@@ -167,7 +183,7 @@ void Elevator::step() {
         openDoor();
         // Remove all requests for this floor to avoid duplicate stops
         requests.erase(
-            std::remove_if(requests.begin(), requests.end(), 
+            remove_if(requests.begin(), requests.end(), 
                 [target](const Request& r) { return r.getDestinationFloor() == target; }),
             requests.end()
         );
